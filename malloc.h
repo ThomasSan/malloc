@@ -1,13 +1,17 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY_SIZE		getpagesize() * 8;
-# define SMALL_SIZE		getpagesize() * 16;
-# define TINY			TINY_SIZE * 100;
-# define SMALL			SMALL_SIZE * 100;
+# define TINY_SIZE		(size_t)getpagesize() * 8
+# define SMALL_SIZE		(size_t)getpagesize() * 16
+# define TINY			TINY_SIZE * 100
+# define SMALL			SMALL_SIZE * 100
 
+# define PROT			PROT_READ | PROT_WRITE
+# define MAP			MAP_ANON | MAP_PRIVATE
+
+# include <unistd.h>
 # include <stdlib.h>
-# include "libft.h"
+# include "libft/libft.h"
 
 typedef struct 		s_header
 {
