@@ -26,14 +26,15 @@ int			main(void)
 	// head = (t_header*)malloc(sizeof(t_header));
 	// head->size = 42;
 	// head->free = 0;
-	printf("str %p\n", str);
+	printf("<----------------------------->\n");
+	printf("\tstr %p\n", str);
 	printf("<----------------------------->\n");
 	// iterate_mem(head);
-	// printf("mem %p\n", head->mem);
-	// printf("size %p\n", &head->size);
-	// printf("free %p\n", &head->free);
-	// printf("header %p\n", g_env);
-	// printf("tiny %p\n", g_env.tiny);
+	// printf("\tmem %p\n", head->mem);
+	// printf("\tsize %p\n", &head->size);
+	// printf("\tfree %p\n", &head->free);
+	// printf("\theader %p\n", g_env);
+	// printf("\ttiny %p\n", g_env.tiny);
 	// show_alloc_mem();
 	return (0);
 }
