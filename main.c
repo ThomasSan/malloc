@@ -1,6 +1,3 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "malloc.h"
 
 void		iterate_mem(void *ptr)
@@ -19,31 +16,23 @@ void		iterate_mem(void *ptr)
 
 int			main(void)
 {
-	char		*str;
+	char		*str1;
+	char		*str2;
+	char		*str3;
+	char		*str4;
+	char		*str5;
+	char		*str6;
+	char		*str7;
 	t_header	*head;
 
-	str = (char*)malloc(sizeof(char) * 10);
-	// head = (t_header*)malloc(sizeof(t_header));
-	// head->size = 42;
-	// head->free = 0;
-	printf("<----------------------------->\n");
-	printf("\tstr %p\n", str);
-	printf("<----------------------------->\n");
-	// iterate_mem(head);
-	// printf("\tmem %p\n", head->mem);
-	// printf("\tsize %p\n", &head->size);
-	// printf("\tfree %p\n", &head->free);
-	// printf("\theader %p\n", g_env);
-	// printf("\ttiny %p\n", g_env.tiny);
-	// show_alloc_mem();
+	printf("Tiny : %zu, Zone : %zu\n", TINY_SIZE, TINY_ZONE);
+	str1 = malloc(42);
+	str2 = malloc(32);
+	str3 = malloc(10);
+	str4 = malloc(32);
+	str5 = malloc(10);
+	str6 = malloc(32);
+	str7 = malloc(64);
+	show_alloc_mem();
 	return (0);
 }
-
-// TINY : 0xA0000
-// 0xA0020 - 0xA004A : 42 octets
-// 0xA006A - 0xA00BE : 84 octets
-// SMALL : 0xAD000
-// 0xAD020 - 0xADEAD : 3725 octets
-// LARGE : 0xB0000
-// 0xB0020 - 0xBBEEF : 48847 octets
-// Total : 52698 octets
