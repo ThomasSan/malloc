@@ -16,12 +16,12 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC = malloc.c show_alloc_mem.c
+SRC = malloc.c free.c realloc.c
 
 OBJ = $(SRC:%.c=obj/%.o)
 
 CXX = gcc
-CXXFLAGS = -g -Wall -Werror -Wextra
+CXXFLAGS = -g -Wall -Werror -Wextra -fsanitize=address
 
 INC = -I includes
 LIB = libft/

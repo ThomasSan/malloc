@@ -3,8 +3,10 @@
 size_t			print_memory(char *str, t_header *list)
 {
 	size_t total;
+	t_header *tmp;
 
 	total = 0;
+	tmp = NULL;
 	if (list)
 	{
 		ft_putstr(str);
@@ -17,6 +19,10 @@ size_t			print_memory(char *str, t_header *list)
 				printf("%p|| %p - %p : %zu octets\n", list, list->mem, (void*)list->mem + list->size, list->size);
 				total += list->size;
 			}
+		// if (tmp && (int)(list - tmp) > (int)SMALL_SIZE)
+		// if (tmp)
+		// 	printf("%d - %d \033[32;1m diff = %d \033[0m / %lu\n", (int)list, (int)tmp, (int)list - (int)tmp, SMALL_SIZE);
+		tmp = list;
 		list = list->next;
 	}
 	return (total);
