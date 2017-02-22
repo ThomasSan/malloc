@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:48:53 by tsanzey           #+#    #+#             */
-/*   Updated: 2016/01/02 11:37:03 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/22 14:27:09 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void				ft_strclr(char *s);
 void				ft_striter(char *s, void (*f)(char*));
 void				ft_striteri(char *s, void (*f)(unsigned int, char*));
 void				ft_ft_striter(char *s, void (*f)(char*));
+void				ft_print_num(unsigned int n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

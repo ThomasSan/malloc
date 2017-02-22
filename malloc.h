@@ -1,14 +1,10 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-// # define TINY_SIZE		(size_t)(getpagesize() + 32)/ 100;
-// # define SMALL_SIZE		(size_t)getpagesize() * 16
-# define TINY_SIZE			(size_t)512
-# define SMALL_SIZE			(size_t)1024
-# define TINY_ZONE			(size_t)getpagesize() * 2
-// # define TINY_ZONE			(size_t)(TINY_SIZE + sizeof(t_header)) * 100
-// # define SMALL_ZONE			(size_t)(SMALL_SIZE + sizeof(t_header)) * 100
-# define SMALL_ZONE			(size_t)getpagesize() * 16
+# define TINY_SIZE			(size_t)getpagesize() * 2
+# define SMALL_SIZE			(size_t)getpagesize() * 16
+# define TINY_ZONE			(size_t)(TINY_SIZE + sizeof(t_header)) * 100
+# define SMALL_ZONE			(size_t)(SMALL_SIZE + sizeof(t_header)) * 100
 
 # define PROT			PROT_READ | PROT_WRITE
 # define MAP			MAP_ANON | MAP_PRIVATE
@@ -40,5 +36,9 @@ void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
 void				show_alloc_mem(void);
 void				show_list(void);
+t_header			*find_mem_chunk(void *ptr);
+t_header			*realloc_chunk(void *ptr);
+void				print_num(unsigned int n);
+void				put_hexa(unsigned long h);
 
 #endif

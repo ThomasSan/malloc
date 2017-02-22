@@ -11,6 +11,7 @@ int		main(void)
 	{
 		addr = (char*)malloc(1024);
 		addr[0] = 42;
+		free(addr);
 		i++;
 	}
 	return (0);

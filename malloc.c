@@ -1,6 +1,7 @@
 #include "malloc.h"
 #include <sys/mman.h>
 
+
 //chercher un morceau de memoire libre
 // si il n'y en as pas ? mapper un nouveau morceau et ajouter un nouveau header a la fin.
 // si il y a enregister et rajouter un header apres
@@ -117,7 +118,8 @@ t_header		*find_free_chunk(t_header **list, size_t size)
 	tmp = *list;
 	while (tmp)
 	{
-		if (tmp->free && tmp->size >= (size + sizeof(t_header)))
+		// printf("%p => free %d, size %zu / %zu\n", tmp, tmp->free, tmp->size, size);
+		if (tmp->free && tmp->size >= size)
 			return (tmp);
 		tmp = tmp->next;
 	}
@@ -148,7 +150,7 @@ void		*allocate_tiny(size_t size)
 		fill_fit(size, &ptr);
 		return (ptr->mem);
 	}
-	if (!(ptr = find_free_chunk(&(g_env.tiny), size))) // si c'est le premier tiny, ou qu'il n'y a plus de place.
+	if (!(ptr = find_free_chunk(&(g_env.tiny), size + sizeof(t_header)))) // si c'est le premier tiny, ou qu'il n'y a plus de place.
 	{
 		ptr = map_tiny_chunk(TINY_ZONE);
 		ptr->size = TINY_ZONE - sizeof(t_header);
@@ -169,7 +171,7 @@ void		*allocate_small(size_t size)
 		fill_fit(size, &ptr);
 		return (ptr->mem);
 	}
-	if (!(ptr = find_free_chunk(&(g_env.small), size))) // si c'est le premier small, ou qu'il n'y a plus de place.
+	if (!(ptr = find_free_chunk(&(g_env.small), size + sizeof(t_header)))) // si c'est le premier small, ou qu'il n'y a plus de place.
 	{
 		ptr = map_small_chunk(SMALL_ZONE);
 		ptr->size = SMALL_ZONE - sizeof(t_header);
@@ -189,25 +191,29 @@ void		*allocate_small(size_t size)
 void		*allocate_large(size_t size)
 {
 	t_header	*ptr;
+	size_t		total_size;
 
-	if (!g_env.large) // si c'est le premier large
-	{
-		// printf("MMAP\n");
-		if ((g_env.large = (t_header*)mmap(0, size + sizeof(t_header), PROT, MAP, -1, 0)) == MAP_FAILED)
-			return (NULL);
-		ptr = g_env.large;
-	}
-	else
+	total_size = size + sizeof(t_header);
+	if (!(ptr = find_free_chunk(&(g_env.large), size)))
 	{
 		ptr = get_last_header(&(g_env.large));
-		// printf("MMAP\n");
-		if ((ptr->next = (t_header*)mmap(0, size + sizeof(t_header), PROT, MAP, -1, 0)) == MAP_FAILED)
-			return (NULL);
-		ptr = ptr->next;
+		if (ptr)
+		{
+			if ((ptr->next = (t_header*)mmap(0, total_size, PROT, MAP, -1, 0)) == MAP_FAILED)
+				return (NULL);
+			ptr = ptr->next;
+		}
+		else
+		{
+			if ((g_env.large = (t_header*)mmap(0, total_size, PROT, MAP, -1, 0)) == MAP_FAILED)
+				return (NULL);
+			ptr = g_env.large;
+		}
 	}
 	ptr->mem = ptr + 1;
 	ptr->size = size;
 	ptr->free = 0;
+	ptr->next = NULL;
 	return (ptr->mem);
 }
 
@@ -215,10 +221,12 @@ void		*malloc(size_t size)
 {
 	void	*ptr;
 
-	// printf("MALLOC\n");
+	// ft_putstr("MALLOC - ");
+	// print_num(size);
+	// ft_putchar('\n');
 	if (size <= 0)
 		return (NULL);
-	if (size <= TINY_SIZE)
+	else if (size <= TINY_SIZE)
 		ptr = allocate_tiny(size);
 	else if (size <= SMALL_SIZE)
 		ptr = allocate_small(size);

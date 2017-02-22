@@ -27,15 +27,37 @@
 // trouver un nouvel espace & le malloc
 // puis memcpy
 
-void				*realloc(void *ptr, size_t size)
+void		put_hexa(unsigned long h)
+{
+	const char *hex = "01234456789abcdef";
+
+	if (h >= 16)
+	{
+		put_hexa(h / 16);
+		put_hexa(h % 16);
+	}
+	else
+		ft_putchar(hex[h]);
+}
+
+void		*realloc(void *ptr, size_t size)
 {
 	t_header	*tmp;
 	void		*ret;
 
-	tmp = (void*)ptr - 32;
-	tmp->free = 1;
+	tmp = realloc_chunk(ptr);
+	printf("%p, %p\n", ptr, tmp);
+	ft_putstr("REALLOC - ");
+	put_hexa((unsigned long)ptr);
+	ft_putchar('\n');
+	if (!tmp && ptr)
+		return (NULL);
 	if (!(ret = malloc(size)))
 		return (NULL);
-	ret = ft_memcpy(ret, tmp->mem, tmp->size);
+	if (tmp)
+	{
+		tmp->free = 1;
+		ret = ft_memcpy(ret, tmp->mem, tmp->size);
+	}
 	return (ret);
 }

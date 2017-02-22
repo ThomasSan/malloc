@@ -16,12 +16,12 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC = malloc.c free.c realloc.c
+SRC = malloc.c free.c realloc.c show_alloc_mem.c find_memory.c
 
 OBJ = $(SRC:%.c=obj/%.o)
 
 CXX = gcc
-CXXFLAGS = -g -Wall -Werror -Wextra -fsanitize=address
+CXXFLAGS = -Wall -Werror -Wextra -g
 
 INC = -I includes
 LIB = libft/
@@ -49,4 +49,12 @@ fclean: clean
 re: fclean all
 	@make re -s -C $(LIB)
 
-.PHONY: fclean all clean re
+test: all
+	gcc test0.c -o test0
+	gcc test1.c -o test1
+	gcc test2.c -o test2
+	gcc test3.c -o test3
+	gcc test4.c -o test4
+	gcc test5.c -o test5
+
+.PHONY: fclean all clean re test

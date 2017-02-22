@@ -7,6 +7,13 @@ void		free(void *ptr)
 {
 	t_header *tmp;
 
-	tmp = (void*)ptr - 32;
+	// ft_putstr("FREE - ");
+	// put_hexa((unsigned long)ptr);
+	// ft_putchar('\n');
+	if (!ptr)
+		return ;
+	tmp = find_mem_chunk(ptr);
+	if (!tmp)
+		return ;
 	tmp->free = 1;
 }
