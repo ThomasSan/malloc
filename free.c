@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:48:24 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 14:04:11 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 20:08:31 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ void		free_tiny_small(t_header *list, t_header *ptr, size_t size)
 		}
 		else if (prev && list == ptr && prev->free && total <= size)
 		{
+			ft_putstr("Here\n");
 			prev->size += list->size + sizeof(t_header);
 			prev->next = list->next;
+			ft_putstr("BITE\n");
 		}
 		else
 			prev = list;
 		if (total > size)
 			total = tmp;
+		ft_putstr("TTT\n");
 		list = list->next;
 	}
 }
@@ -92,6 +95,7 @@ void		free(void *ptr)
 {
 	t_header *tmp;
 
+	ft_putstr("Free\n");
 	if (!ptr)
 		return ;
 	tmp = find_mem_chunk(ptr, 1);

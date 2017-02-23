@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:49:47 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 14:05:40 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 20:08:10 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void		*realloc(void *ptr, size_t size)
 	t_header	*tmp;
 	void		*ret;
 
+	ft_putstr("Realloc\n");
 	tmp = find_mem_chunk(ptr, 0);
 	if (!tmp && ptr)
 		return (NULL);

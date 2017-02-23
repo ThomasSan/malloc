@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:58:05 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 13:58:29 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 20:05:02 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ t_env				g_env;
 
 void				free(void *ptr);
 void				*malloc(size_t size);
+void				*calloc(size_t count, size_t size);
 void				*realloc(void *ptr, size_t size);
+void				*reallocf(void *ptr, size_t size);
 void				show_alloc_mem(void);
 
 t_header			*find_mem_chunk(void *ptr, int flag);

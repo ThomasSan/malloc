@@ -16,7 +16,7 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC = malloc.c free.c realloc.c show_alloc_mem.c find_memory.c fit.c allocate_chunk.c
+SRC = malloc.c free.c realloc.c show_alloc_mem.c find_memory.c fit.c allocate_chunk.c calloc.c
 
 OBJ = $(SRC:%.c=obj/%.o)
 
