@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:59:04 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 11:59:07 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 13:57:11 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		fill_info(size_t size, t_header **add)
 	t_header	*next;
 
 	tmp = *add;
-	next = tmp->next ? tmp->next : NULL ;
+	next = tmp->next ? tmp->next : NULL;
 	tmp->mem = tmp + 1;
 	tmp->free = 0;
 	tmp->next = (void*)tmp->mem + size;

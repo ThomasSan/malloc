@@ -6,19 +6,22 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:49:14 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 11:49:43 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 13:59:31 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
+/*
+** ft_putstr("MALLOC - ");
+** print_num(size);
+**ft_putchar('\n');
+*/
+
 void		*malloc(size_t size)
 {
 	void	*ptr;
 
-	// ft_putstr("MALLOC - ");
-	// print_num(size);
-	// ft_putchar('\n');
 	if (size <= 0)
 		return (NULL);
 	else if (size <= TINY_SIZE)

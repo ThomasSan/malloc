@@ -6,14 +6,14 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:49:47 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 11:49:52 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 14:05:40 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
 /*
-** 1er cas : il y a la place tout de suite apres 
+** 1er cas : il y a la place tout de suite apres
 ** !! Attention que la zone soit bien allouee a mem + size de mem;
 ** Sinon c'est deux zones differentes.
 ** A) Changer la size dans le header
@@ -39,7 +39,66 @@
 ** sauver le ptr de la zone memoire
 ** trouver un nouvel espace & le malloc
 ** puis memcpy
+** printf("%p, %p\n", ptr, tmp);
+** ft_putstr("REALLOC - ");
+** put_hexa((unsigned long)ptr);
+** ft_putchar('\n');
 */
+
+t_header	*find_list(t_header *ptr)
+{
+	if (ptr->size <= TINY_SIZE)
+		return (g_env.tiny);
+	else if (ptr->size <= SMALL_SIZE)
+		return (g_env.small);
+	else
+		return (g_env.large);
+}
+
+void		fill_realloc(t_header *prev, t_header *list, size_t new_size)
+{
+	prev->next = (void*)prev->mem + new_size;
+	prev->next->size = list->size - (new_size - prev->size);
+	prev->next->free = 1;
+	prev->next->mem = prev->next + 1;
+	prev->size = new_size;
+	prev->next->next = list->next;
+}
+
+int			fusion(t_header *list, t_header *ptr, size_t size, size_t new_size)
+{
+	t_header	*prev;
+	size_t		total;
+	size_t		tmp;
+
+	prev = NULL;
+	total = 0;
+	while (list)
+	{
+		tmp = sizeof(t_header) + list->size;
+		total += tmp;
+		if (prev && prev == ptr && (ptr->size + list->size) >= size)
+		{
+			fill_realloc(prev, list, new_size);
+			return (1);
+		}
+		if (total > size)
+			total = tmp;
+		prev = list;
+		list = list->next;
+	}
+	return (0);
+}
+
+int			join_headers(t_header *ptr, size_t size)
+{
+	t_header *list;
+
+	list = find_list(ptr);
+	if (!list)
+		return (0);
+	return (fusion(list, ptr, TINY_SIZE, size));
+}
 
 void		*realloc(void *ptr, size_t size)
 {
@@ -47,12 +106,13 @@ void		*realloc(void *ptr, size_t size)
 	void		*ret;
 
 	tmp = find_mem_chunk(ptr, 0);
-	// printf("%p, %p\n", ptr, tmp);
-	// ft_putstr("REALLOC - ");
-	// put_hexa((unsigned long)ptr);
-	// ft_putchar('\n');
 	if (!tmp && ptr)
 		return (NULL);
+	if (tmp && tmp->size < size && tmp->next && tmp->next->free)
+	{
+		if (join_headers(tmp, size))
+			return (tmp->mem);
+	}
 	if (!(ret = malloc(size)))
 		return (NULL);
 	if (tmp)

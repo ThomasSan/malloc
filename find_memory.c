@@ -6,7 +6,7 @@
 /*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:47:27 by tsanzey           #+#    #+#             */
-/*   Updated: 2017/02/23 11:48:58 by tsanzey          ###   ########.fr       */
+/*   Updated: 2017/02/23 13:59:57 by tsanzey          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_header	*get_last_header(t_header **list)
 	return (tmp);
 }
 
-t_header		*find_free_chunk(t_header **list, size_t size)
+t_header	*find_free_chunk(t_header **list, size_t size)
 {
 	t_header *tmp;
 

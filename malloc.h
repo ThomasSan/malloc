@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   malloc.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/23 13:58:05 by tsanzey           #+#    #+#             */
+/*   Updated: 2017/02/23 13:58:29 by tsanzey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MALLOC_H
 # define MALLOC_H
 
@@ -15,7 +27,14 @@
 # include <sys/mman.h>
 # include "libft/libft.h"
 
-typedef struct 		s_header
+typedef enum		e_type
+{
+	TINY,
+	SMALL,
+	LARGE
+}					t_type;
+
+typedef struct		s_header
 {
 	void			*mem;
 	size_t			size;
@@ -23,7 +42,7 @@ typedef struct 		s_header
 	struct s_header	*next;
 }					t_header;
 
-typedef struct 		s_env
+typedef struct		s_env
 {
 	struct s_header	*tiny;
 	struct s_header	*small;

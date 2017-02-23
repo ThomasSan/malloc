@@ -12,7 +12,7 @@
 
 #include "malloc.h"
 
-t_header			*map_tiny_chunk(size_t zone)
+t_header	*map_tiny_chunk(size_t zone)
 {
 	t_header	*last;
 
@@ -34,7 +34,7 @@ t_header			*map_tiny_chunk(size_t zone)
 	return (NULL);
 }
 
-t_header			*map_small_chunk(size_t zone)
+t_header	*map_small_chunk(size_t zone)
 {
 	t_header	*last;
 
@@ -56,7 +56,7 @@ t_header			*map_small_chunk(size_t zone)
 	return (NULL);
 }
 
-void			*allocate_tiny(size_t size)
+void		*allocate_tiny(size_t size)
 {
 	t_header	*ptr;
 
@@ -76,7 +76,7 @@ void			*allocate_tiny(size_t size)
 	return (ptr->mem);
 }
 
-void			*allocate_small(size_t size)
+void		*allocate_small(size_t size)
 {
 	t_header	*ptr;
 
@@ -96,7 +96,7 @@ void			*allocate_small(size_t size)
 	return (ptr->mem);
 }
 
-void			*allocate_large(size_t size)
+void		*allocate_large(size_t size)
 {
 	t_header	*ptr;
 
