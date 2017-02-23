@@ -57,5 +57,6 @@ test: all
 	gcc test3++.c -o test3++
 	gcc test4.c -o test4
 	gcc test5.c -o test5 -L. -lft_malloc
+	gcc test6.c -o test6 -L . -lft_malloc
 
 .PHONY: fclean all clean re test

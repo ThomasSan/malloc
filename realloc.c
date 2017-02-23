@@ -77,7 +77,8 @@ int			fusion(t_header *list, t_header *ptr, size_t size, size_t new_size)
 	{
 		tmp = sizeof(t_header) + list->size;
 		total += tmp;
-		if (prev && prev == ptr && (ptr->size + list->size) >= size)
+		if (prev && prev == ptr && (ptr->size + list->size) >= new_size
+			&& total <= size)
 		{
 			fill_realloc(prev, list, new_size);
 			return (1);
@@ -90,14 +91,21 @@ int			fusion(t_header *list, t_header *ptr, size_t size, size_t new_size)
 	return (0);
 }
 
-int			join_headers(t_header *ptr, size_t size)
+int			resize_headers(t_header *ptr, size_t size)
 {
-	t_header *list;
+	t_header	*list;
+	size_t		page;
 
 	list = find_list(ptr);
 	if (!list)
 		return (0);
-	return (fusion(list, ptr, TINY_SIZE, size));
+	if (ptr->size <= TINY_SIZE)
+		page = TINY_SIZE;
+	else if (ptr->size <= SMALL_SIZE)
+		page = SMALL_SIZE;
+	else
+		return (0);
+	return (fusion(list, ptr, page, size));
 }
 
 void		*realloc(void *ptr, size_t size)
@@ -110,7 +118,7 @@ void		*realloc(void *ptr, size_t size)
 		return (NULL);
 	if (tmp && tmp->size < size && tmp->next && tmp->next->free)
 	{
-		if (join_headers(tmp, size))
+		if (resize_headers(tmp, size))
 			return (tmp->mem);
 	}
 	if (!(ret = malloc(size)))

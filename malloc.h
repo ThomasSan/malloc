@@ -67,6 +67,7 @@ t_header			*perfect_fit(t_header **list, size_t size);
 void				*allocate_tiny(size_t size);
 void				*allocate_small(size_t size);
 void				*allocate_large(size_t size);
+t_header			*find_list(t_header *ptr);
 
 void				print_num(unsigned int n);
 void				put_hexa(unsigned long h);
