@@ -16,7 +16,7 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-SRC = malloc.c free.c realloc.c show_alloc_mem.c find_memory.c
+SRC = malloc.c free.c realloc.c show_alloc_mem.c find_memory.c fit.c allocate_chunk.c
 
 OBJ = $(SRC:%.c=obj/%.o)
 
@@ -54,7 +54,8 @@ test: all
 	gcc test1.c -o test1
 	gcc test2.c -o test2
 	gcc test3.c -o test3
+	gcc test3++.c -o test3++
 	gcc test4.c -o test4
-	gcc test5.c -o test5
+	gcc test5.c -o test5 -L. -lft_malloc
 
 .PHONY: fclean all clean re test

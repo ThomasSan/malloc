@@ -1,28 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsanzey <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/23 11:49:55 by tsanzey           #+#    #+#             */
+/*   Updated: 2017/02/23 13:12:52 by tsanzey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 
-size_t			print_memory(char *str, t_header *list)
+void		put_hexa(unsigned long h)
 {
-	size_t total;
-	t_header *tmp;
+	const char *hex = "0123456789abcdef";
+
+	if (h >= 16)
+	{
+		put_hexa(h / 16);
+		put_hexa(h % 16);
+	}
+	else
+		ft_putchar(hex[h]);
+}
+
+void		put_pointer(void *ptr)
+{
+	ft_putstr("0x");
+	put_hexa((unsigned long)ptr);
+}
+
+size_t		print_memory(char *str, t_header *list)
+{
+	size_t		total;
 
 	total = 0;
-	tmp = NULL;
 	if (list)
 	{
 		ft_putstr(str);
-		printf("%p\n", list); // afficher le debut de la zone memoire tiny
+		put_pointer(list);
+		ft_putchar('\n');
 	}
 	while (list)
 	{
 		if (list->free == 0)
-			{
-				printf("%p|| %p - %p : %zu octets\n", list, list->mem, (void*)list->mem + list->size, list->size);
-				total += list->size;
-			}
-		// if (tmp && (int)(list - tmp) > (int)SMALL_SIZE)
-		// if (tmp)
-		// 	printf("%d - %d \033[32;1m diff = %d \033[0m / %lu\n", (int)list, (int)tmp, (int)list - (int)tmp, SMALL_SIZE);
-		tmp = list;
+		{
+			put_pointer(list->mem);
+			ft_putstr(" - ");
+			put_pointer((void*)list->mem + list->size);
+			ft_putstr(" : ");
+			print_num(list->size);
+			ft_putendl(" octets");
+			total += list->size;
+		}
 		list = list->next;
 	}
 	return (total);

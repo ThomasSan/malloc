@@ -12,6 +12,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/mman.h>
 # include "libft/libft.h"
 
 typedef struct 		s_header
@@ -35,9 +36,19 @@ void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
 void				show_alloc_mem(void);
-void				show_list(void);
-t_header			*find_mem_chunk(void *ptr);
-t_header			*realloc_chunk(void *ptr);
+
+t_header			*find_mem_chunk(void *ptr, int flag);
+t_header			*get_last_header(t_header **list);
+t_header			*find_free_chunk(t_header **list, size_t size);
+
+void				fill_info(size_t size, t_header **add);
+void				fill_fit(size_t size, t_header **add);
+t_header			*perfect_fit(t_header **list, size_t size);
+
+void				*allocate_tiny(size_t size);
+void				*allocate_small(size_t size);
+void				*allocate_large(size_t size);
+
 void				print_num(unsigned int n);
 void				put_hexa(unsigned long h);
 
