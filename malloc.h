@@ -26,6 +26,7 @@
 # include <stdlib.h>
 # include <sys/mman.h>
 # include "libft/libft.h"
+# include <pthread.h>
 
 typedef enum		e_type
 {
@@ -50,6 +51,7 @@ typedef struct		s_env
 }					t_env;
 
 t_env				g_env;
+pthread_mutex_t		g_mutex;
 
 void				free(void *ptr);
 void				*malloc(size_t size);

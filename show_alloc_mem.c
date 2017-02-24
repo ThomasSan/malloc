@@ -63,9 +63,13 @@ void		show_alloc_mem(void)
 {
 	size_t		total;
 
+	pthread_mutex_lock(&g_mutex);
 	total = 0;
 	total += print_memory("TINY : ", g_env.tiny);
 	total += print_memory("SMALL : ", g_env.small);
 	total += print_memory("LARGE : ", g_env.large);
-	printf("total : %zu octets\n", total);
+	ft_putstr("total : ");
+	print_num(total);
+	ft_putstr(" octets\n");
+	pthread_mutex_unlock(&g_mutex);
 }
